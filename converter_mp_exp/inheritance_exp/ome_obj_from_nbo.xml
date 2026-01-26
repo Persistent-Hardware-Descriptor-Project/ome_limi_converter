@@ -1,0 +1,6 @@
+<?xml version="1.0" ?>
+<OME xmlns="http://www.openmicroscopy.org/Schemas/OME/2016-06">
+  <Instrument ID="Instrument:0">
+    <Objective ID="Objective:0" Manufacturer="Zeiss" Model="Plan-Apochromat" LensNA="1.4" NominalMagnification="63" Immersion="Oil"/>
+  </Instrument>
+</OME>

@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<OME xmlns="http://www.openmicroscopy.org/Schemas/OME/2016-06" xmlns:nbo="https://nbo.github.io/4DN-BINA-OME-Schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="{http://www.openmicroscopy.org/Schemas/OME/2016-06} https://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd {https://nbo.github.io/4DN-BINA-OME-Schema}https://zenodo.org/records/4711426/files/NBO_MicroscopyMetadataSpecifications_ALL.xsd">
+  <Instrument ID="Instrument:0">
+    <Objective Manufacturer="Zeiss" Model="Plan-Apochromat" ID="Objective:0" NominalMagnification="63" LensNA="1.4">
+      <nbo:derivatives>{'ome': {'Manufacturer': 'Zeiss', 'Model': 'Plan-Apochromat', 'SerialNumber': None, 'LotNumber': None, 'ID': 'Objective:0', 'NominalMagnification': '63', 'LensNA': '1.4', 'Correction': None, 'WorkingDistance': None, 'WorkingDistanceUnit': None, 'CalibratedMagnification': None, 'Iris': None, 'AnnotationRef': None, 'Extensions': {'nbo': {'Manufacturer': 'Zeiss', 'Model': 'Plan-Apochromat', 'CatalogNumber': None, 'LotNumber': None, 'ID': 'Objective:0', 'Magnification': '63', 'LensNA': '1.4', 'Correction': None, 'WorkingDistance': None, 'WorkingDistanceUnit': None, 'CalibratedMagnification': None, 'Iris': None, 'AnnotationRef': None, 'derivatives': {'ome': {'ID': 'Objective:0', 'Manufacturer': 'Zeiss', 'Model': 'Plan-Apochromat', 'Immersion': 'Oil', 'LensNA': '1.4', 'NominalMagnification': '63', 'SerialNumber': None, 'LotNumber': None, 'Correction': None, 'CalibratedMagnification': None, 'WorkingDistance': None, 'WorkingDistanceUnit': None, 'Iris': None, 'AnnotationRef': None}}}}}}</nbo:derivatives>
+      <nbo:Manufacturer>Zeiss</nbo:Manufacturer>
+      <nbo:Model>Plan-Apochromat</nbo:Model>
+      <nbo:ID>Objective:0</nbo:ID>
+      <nbo:Magnification>63</nbo:Magnification>
+      <nbo:LensNA>1.4</nbo:LensNA>
+    </Objective>
+  </Instrument>
+</OME>

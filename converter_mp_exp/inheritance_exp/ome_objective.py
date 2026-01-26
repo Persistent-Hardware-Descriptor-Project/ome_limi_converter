@@ -1,0 +1,100 @@
+import xml.etree.ElementTree as ET
+import xml.dom.minidom
+
+class OME_Objective:
+
+    # There are three types of differences between the core attributes in OME extended into NBO:
+    # 0: Type Change (cannot safely convert attribute from NBO to OME embedding)
+    # 1: Name Change (type and attribute represented are the same, name is different)
+    # 2: No Change
+    core_attr = {"Manufacturer": ("Manufacturer", 2),
+                 "Model": ("Model", 2),
+                 "SerialNumber": ("CatalogNumber", 1),
+                 "LotNumber": ("LotNumber", 2),
+                 "ID": ("ID", 2),
+                 "NominalMagnification": ("Magnification", 1),
+                 "LensNA": ("LensNA", 2),
+                 "Correction": ("Correction", 2),
+                 "Immersion": ("ImmersionType", 0),
+                 "WorkingDistance": ("WorkingDistance", 2),
+                 "WorkingDistanceUnit": ("WorkingDistanceUnit", 2),
+                 "CalibratedMagnification": ("CalibratedMagnification", 2),
+                 "Iris": ("Iris", 2),
+                 "AnnotationRef": ("AnnotationRef", 2)
+                 }
+
+    # xml_fn = filename of the xml file with the ome objective data
+    def __init__(self, ome_data):
+        for key, value in ome_data.items():
+            setattr(self, key, value)    
+
+    @classmethod
+    def init_from_xml(cls, xml_fn):
+        xml_fn = "nbo_objective.xml"
+        tree = ET.parse(xml_fn)
+        root = tree.getroot()
+        ns = {
+            'ome': 'http://www.openmicroscopy.org/Schemas/OME/2016-06',
+            'nbo': 'https://doi.org/10.5281/zenodo.4711426'
+        }
+        objective = root.find('.//ome:Objective', ns)
+
+        ome_data = dict(objective.attrib)
+        ome_obj = cls(ome_data)
+        return ome_obj
+
+    def parse_to_xml(self, xml_fn):
+        ns = 'http://www.openmicroscopy.org/Schemas/OME/2016-06'
+        ET.register_namespace("", ns)
+
+        ome_root = ET.Element(f"{{{ns}}}OME")
+
+        instrument = ET.SubElement(ome_root, f"{{{ns}}}Instrument", ID = "Instrument:0")
+
+        ome_objective = {}
+        for attr, value in self.__dict__.items():
+            if value is not None:
+                ome_objective[attr] = str(value)
+
+        objective = ET.SubElement(instrument, f"{{{ns}}}Objective", attrib=ome_objective)
+        xml_str = ET.tostring(ome_root, encoding="unicode", method="xml")
+
+        dom = xml.dom.minidom.parseString(xml_str)
+        indented_str = dom.toprettyxml(indent="  ")
+        try:
+            with open(xml_fn, "w", encoding="utf-8") as outfile:
+                outfile.write(indented_str)
+        except IOError as e:
+            print(f"Error in writing to xml file: {e}")
+
+    # Based on Alex's comments from last time, this should not be necessary
+    # Unsure though because Josh seemed on board for the conversion from 
+    def extract_nbo_data(self, dd):
+        nbo_data = {}
+        for k, v in self.core_attr.items():
+            if v[1]:
+                if k in dd:
+                    nbo_data[v[0]] = dd[k]
+                    # nbo_data[v[0]] = dd.get(k)
+            # else:
+            #     nbo_data[v[0]] = None
+        return nbo_data
+        
+    def parse_to_nbo(self):
+        from nbo_objective import NBO_Objective
+        nbo_obj = NBO_Objective(self.Extensions["nbo"])
+        return nbo_obj
+
+    # def __setattr__(self, attr, val):
+    #     if attr in self.core_attr:
+    #         nbo_attr, mode = self.core_attr[attr]
+    #         if mode:
+    #             self.Extensions["nbo"][nbo_attr] = val
+    #             self.Extensions["nbo"]["derivatives"]["ome"][attr] = val
+    #     object.__setattr__(self, attr, val)
+
+    
+
+    
+
+    

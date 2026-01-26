@@ -1,0 +1,17 @@
+<?xml version="1.0" ?>
+<OME xmlns="http://www.openmicroscopy.org/Schemas/OME/2016-06">
+  <Instrument ID="Instrument:0">
+    <Objective 
+    Extensions={'nbo': {'WorkingDistance': 0.17, 
+    'CalibratedMagnification': 64.0, 
+    'Iris': false}}
+    Manufacturer="Zeiss" 
+    Model="Plan-Apochromat" 
+    SerialNumber="OBJ-SN-12345" 
+    LotNumber="L123456" 
+    ID="Objective:0" 
+    Correction="BeadScan" 
+    LensNA="1.4" 
+    NominalMagnification="67"/>
+  </Instrument>
+</OME>

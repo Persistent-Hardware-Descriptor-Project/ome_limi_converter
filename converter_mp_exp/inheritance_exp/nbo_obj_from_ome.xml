@@ -1,0 +1,13 @@
+<?xml version="1.0" ?>
+<OME xmlns="http://www.openmicroscopy.org/Schemas/OME/2016-06" xmlns:nbo="https://nbo.github.io/4DN-BINA-OME-Schema" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="{http://www.openmicroscopy.org/Schemas/OME/2016-06} https://www.openmicroscopy.org/Schemas/OME/2016-06/ome.xsd {https://nbo.github.io/4DN-BINA-OME-Schema}https://zenodo.org/records/4711426/files/NBO_MicroscopyMetadataSpecifications_ALL.xsd">
+  <Instrument ID="Instrument:0">
+    <Objective>
+      <nbo:ID>Objective:0</nbo:ID>
+      <nbo:Manufacturer>Zeiss</nbo:Manufacturer>
+      <nbo:Model>Plan-Apochromat</nbo:Model>
+      <nbo:LensNA>1.4</nbo:LensNA>
+      <nbo:parent>&lt;ome_objective.OME_Objective object at 0x000001452E6C53D0&gt;</nbo:parent>
+      <nbo:Magnification>63</nbo:Magnification>
+    </Objective>
+  </Instrument>
+</OME>
