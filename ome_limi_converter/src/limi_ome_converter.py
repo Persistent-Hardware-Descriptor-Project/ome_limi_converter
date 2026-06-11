@@ -82,11 +82,11 @@ def parse_from_json(
 def convert_to_ome(
         limi_dict: dict
 ):
-    '''Converts the LiMi object obtained from user provided XML to OME object
+    '''Converts the LiMi object obtained from user provided JSON to OME object
 
     Parameters
     -------------------------
-    limi_obj: Original LiMi object obtained from the parsing the XML file
+    limi_dict: Contains the original LiMi object obtained from parsing the JSON file
 
     Returns
     -------------------------

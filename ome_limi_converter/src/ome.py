@@ -25,13 +25,10 @@ class OME_complex_type:
         -------------------------
         name: name of the OME type
         type_: simple or complex type
-        sct: simple or complex type
-        ext: OME complex types can be extensions of other OME complex types
-        global_: bool for global or local type (local type is defined within other complex types or elements)
 
         Returns
         -------------------------
-        an object of type OME_type
+        an object of type OME_complex_type
         '''
         self.name = name
         self.type_ = type_
@@ -47,8 +44,8 @@ class OME_complex_type:
 class OME_attribute:
     def __init__(self,
                  name: str,
-                 type_: OME_type | XSD_types,
-                 rest: OME_type | XSD_types):
+                 type_: OME_complex_type | XSD_types,
+                 rest: OME_complex_type | XSD_types):
         '''class to create new OME attributes
 
         Parameters

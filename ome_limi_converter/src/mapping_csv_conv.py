@@ -28,6 +28,10 @@ def csv_to_dict(filename):
 
     data_dict = df.to_dict(orient='records')
     # print(data_dict)
+    # print("--- DEBUGGING INDEX ISSUE ---")
+    # for i in range(len(data_dict)):
+    #     if any("removed" in str(k) for k in data_dict[i].values()):
+    #         print(i, "      ", data_dict[i])
 
     # change variable name
     prev_j = 7
@@ -37,44 +41,55 @@ def csv_to_dict(filename):
 
     for i in range(len(data_dict)):
         row = data_dict[i]
+        non_nan_row = False
 
         if all(pd.isna(x) for x in row.values()):
-            # print(i)
             continue
 
         for j in range(1, 7):
             if not pd.isna(row[str(j)]):
+                non_nan_row = True
                 break
-        
-        # print(j)
-        # IF STATEMENT FOR DEBUGGING PURPOSES ONLY
-        if j == 7:
-            print("---------!!!ROW WITH ALL ELEMENTS NAN FOUND!!!---------")
 
-        curr_elem = data_dict[i][str(j)]
-        in_ome = data_dict[i]['OME 6-2016']
-        ome_dtype = data_dict[i]['OME Data type']
+        if not non_nan_row:
+            continue
 
-        limi_elems[curr_elem] = ([], in_ome, ome_dtype)
+        curr_elem = row[str(j)]
+        in_ome = row['OME 6-2016']
+        ome_dtype = row['OME Data type']
 
-        if j > prev_j:
-            limi_elems[prev_elem][0].append(curr_elem)
-            parent_stack.append((prev_elem, prev_j))
-        
-        elif j < prev_j:
-            while len(parent_stack) and parent_stack[-1][1]>= j:
-                parent_stack.pop()
-            if len(parent_stack) != 0:
-                curr_parent = parent_stack[-1][0]
-                limi_elems[curr_parent][0].append(curr_elem)
+        if curr_elem == "removed OME field(s)":
+            curr_elem = parent_stack[-1][0] + "_rmf"
+            limi_elems[curr_elem] = ([in_ome], in_ome, ome_dtype)
+            i += 1
+            rmf_row = data_dict[i]
+            while (all(pd.isna(rmf_row[str(x)]) for x in range(1, 7))) and not pd.isna(rmf_row["OME 6-2016"]):
+                in_ome = rmf_row["OME 6-2016"]
+                limi_elems[curr_elem][0].append(in_ome)
+                i += 1
+                rmf_row = data_dict[i]
+            continue
 
         else:
-            if len(parent_stack) != 0:
-                curr_parent = parent_stack[-1][0]
-                limi_elems[curr_parent][0].append(curr_elem)
+            limi_elems[curr_elem] = ([], in_ome, ome_dtype)
+            if j > prev_j:
+                limi_elems[prev_elem][0].append(curr_elem)
+                parent_stack.append((prev_elem, prev_j))
+            
+            elif j < prev_j:
+                while len(parent_stack) and parent_stack[-1][1]>= j:
+                    parent_stack.pop()
+                if len(parent_stack) != 0:
+                    curr_parent = parent_stack[-1][0]
+                    limi_elems[curr_parent][0].append(curr_elem)
 
-        prev_j = j
-        prev_elem = curr_elem
+            else:
+                if len(parent_stack) != 0:
+                    curr_parent = parent_stack[-1][0]
+                    limi_elems[curr_parent][0].append(curr_elem)
+
+            prev_j = j
+            prev_elem = curr_elem
 
     # print(limi_elems)
     return limi_elems                
@@ -130,6 +145,8 @@ def xsd_to_ome(ome_xsd_loc = "../ome.xsd"):
 
     for ct in root.findall("./xs:complexType", ns):
         traverse_complex_types(ct, ns, global_elem, global_cts)
+
+    # --- Stuff for Debugging ---
 
     # print(count)
     # for k in sorted(all_ome_elements):
@@ -308,10 +325,10 @@ def traverse_complex_types(ct, ns, global_elements, global_cts):
                 traverse_elements(child, ns, global_elements, global_cts)
 
 
-limi_elems = csv_to_dict("NBO_MicroscopyMetadataSpecifications_copy.csv")
+limi_elems = csv_to_dict("limi_ome_mapping_simplified.csv")
 xsd_to_ome()
 
-print(all_ome_cts)
+# print(all_ome_cts)
 
 def _limi_ome_conv_debugger(limi_elems):
     for elem, tuple in limi_elems.items():
@@ -325,3 +342,9 @@ _limi_ome_conv_debugger(limi_elems)
 # for elems in all_ome_elements:
 #     if "Value" in elems:
 #         print(elems, "    ", all_ome_elements[elems].type_)
+
+print("Removed fields debugging: ")
+for elems, tuple in limi_elems.items():
+    # print(elems, "      ", tuple[0], "  ", tuple[1], "  ", tuple[2])
+    if "_rmf" in elems:
+        print(elems, "    ", tuple[0])
