@@ -40,6 +40,7 @@ This project is under active development.
 ```text
 project/
 ├── src/
+│ └── mapping/
 ├── tests/
 ├── schemas/
 └── README.md
@@ -47,11 +48,12 @@ project/
 
 ### Directories
 
-| Directory   | Description                                             |
-| ----------- | ------------------------------------------------------- |
-| `src/`      | Source code                                             |
-| `tests/`    | NBO instance files to test code on                      |
-| `schemas/`  | OME and NBO schema definitions (XSD and JSON Schema)    |
+| Directory      | Description                                             |
+| -----------    | ------------------------------------------------------- |
+| `src/`         | Source code                                             |
+| `src/mapping/` | CSV files with NBO to OME mapping info                  |
+| `tests/`       | NBO instance files to test code on                      |
+| `schemas/`     | OME and NBO schema definitions (XSD and JSON Schema)    |
 
 ## Supported Formats
 
