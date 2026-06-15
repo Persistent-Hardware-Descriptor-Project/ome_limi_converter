@@ -33,7 +33,6 @@ This project is under active development.
   - jsonschema
   - ome-types
   - pandas
-  - numpy
 
 ### Repository Structure
 
