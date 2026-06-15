@@ -1,6 +1,6 @@
-# 
+# LiMi-to-OME Converter
 
-Python library to convert instances of QUAREP-LiMi NBO microscopy metadata standard to instances of Open Microscopy Environment. 
+Python library to convert instances of QUAREP-LiMi 4DN-BINA OME (NBO) microscopy metadata standard to instances of Open Microscopy Environment (OME). 
 
 ## Overview
 
